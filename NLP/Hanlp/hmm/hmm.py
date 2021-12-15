@@ -13,4 +13,3 @@ emission_probability = {
 observations = ("normal", "cold", "dizzy")
 
 
-def 
