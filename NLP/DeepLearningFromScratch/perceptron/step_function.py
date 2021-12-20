@@ -22,7 +22,6 @@ def test_step_function():
     plt.plot(x, y)
     plt.ylim(-0.1, 1.1)
     plt.show()
-    pass
 
 
 if __name__ == '__main__':
