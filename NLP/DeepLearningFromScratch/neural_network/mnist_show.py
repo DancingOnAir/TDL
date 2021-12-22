@@ -25,7 +25,9 @@ label = t_train[0]
 print(label)
 
 print(img.shape)
+# img_show(img)
+
+
 img = img.reshape(28, 28)
 print(img.shape)
-
 img_show(img)
