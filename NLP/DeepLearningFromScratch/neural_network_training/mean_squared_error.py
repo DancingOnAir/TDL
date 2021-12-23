@@ -6,10 +6,22 @@ def mean_squared_error(y, t):
     return 0.5 * np.sum((y - t) ** 2)
 
 
+# for y.ndim = 1
 def cross_entropy_error(y, t):
     print(y * t)
     delta = 1e-7
     return -np.sum(t * np.log(y + delta))
+
+
+# for one-hot
+def cross_entropy_error_batch(y, t):
+    if y.ndim == 1:
+        y = y.reshape(1, y.size)
+        t = t.reshape(1, t.size)
+
+    batch_size = y.shape[0]
+    delta = 1e-7
+    return -np.sum(t * np.log(y + delta)) / batch_size
 
 
 def test_lost_function():
