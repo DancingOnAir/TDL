@@ -33,6 +33,10 @@ def test_simple_network():
     t = np.array([0, 0, 1])
     print(net.loss(x, t))
 
+    f = lambda w: net.loss(x, t)
+    dW = numerical_gradient(f, net.W)
+    print(dW)
+
 
 if __name__ == '__main__':
     test_simple_network()

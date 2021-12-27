@@ -7,6 +7,7 @@ def numerical_gradient(f, x):
     for i in range(x.size):
         tmp_x = x[i]
         x[i] = tmp_x + h
+
         fhx1 = f(x)
 
         x[i] = tmp_x - h
