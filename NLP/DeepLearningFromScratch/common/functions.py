@@ -12,8 +12,8 @@ def softmax(x):
 
 def cross_entropy_error(y, t):
     if y.ndim == 1:
-        y = y.reshape(1, len(y))
-        t = t.reshape(1, len(t))
+        y = y.reshape(1, y.size)
+        t = t.reshape(1, t.size)
 
     batch_size = y.shape[0]
     delta = 1e-7

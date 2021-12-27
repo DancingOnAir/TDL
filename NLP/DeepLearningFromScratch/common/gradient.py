@@ -2,7 +2,7 @@ import numpy as np
 
 
 def numerical_gradient(f, x):
-    h = 1e-5
+    h = 1e-4
     grad = np.zeros_like(x)
     for i in range(x.size):
         tmp_x = x[i]
