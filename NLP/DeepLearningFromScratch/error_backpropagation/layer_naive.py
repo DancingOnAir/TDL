@@ -1,3 +1,7 @@
+from common.functions import sigmoid
+import numpy as np
+
+
 class MulLayer:
     def __init__(self):
         self.x = None
@@ -28,3 +32,19 @@ class AddLayer:
         dy = dout * 1
         return dx, dy
 
+
+class Sigmoid:
+    def __init__(self):
+        self.out = None
+        pass
+
+    def forward(self, x):
+        out = 1 / (1 + np.exp(-x))
+        self.out = out
+
+        return out
+
+    def backward(self, dout):
+        dx = dout * self.out * (1 - self.out)
+
+        return dx
