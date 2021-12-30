@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.pardir)
 
-from common.functions import sigmoid
+from common.functions import sigmoid, cross_entropy_error
 import numpy as np
 
 
@@ -68,5 +68,27 @@ class Relu:
     def backward(self, dout):
         dout[self.mask] = 0
         dx = dout
+
+        return dx
+
+
+class Affine:
+    def __init__(self, x, W, b):
+        self.W = W
+        self.b = b
+        self.x = None
+        self.dw = None
+        self.db = None
+
+    def forward(self, x):
+        self.x = x
+        out = np.dot(x, self.W) + self.b
+
+        return out
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+        self.dw = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
 
         return dx
