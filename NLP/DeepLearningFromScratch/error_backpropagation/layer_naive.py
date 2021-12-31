@@ -92,3 +92,23 @@ class Affine:
         self.db = np.sum(dout, axis=0)
 
         return dx
+
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.y = None
+        self.t = None
+        self.loss = None
+
+    def forward(self, x, t):
+        self.y = sigmoid(x)
+        self.t = t
+        self.loss = cross_entropy_error(y, t)
+
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.y.shape[0]
+        dx = dout * (self.y - self.t) / batch_size
+
+        return dx
