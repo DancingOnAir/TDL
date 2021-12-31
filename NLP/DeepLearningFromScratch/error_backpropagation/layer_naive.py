@@ -73,11 +73,11 @@ class Relu:
 
 
 class Affine:
-    def __init__(self, x, W, b):
+    def __init__(self, W, b):
         self.W = W
         self.b = b
         self.x = None
-        self.dw = None
+        self.dW = None
         self.db = None
 
     def forward(self, x):
@@ -88,7 +88,7 @@ class Affine:
 
     def backward(self, dout):
         dx = np.dot(dout, self.W.T)
-        self.dw = np.dot(self.x.T, dout)
+        self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis=0)
 
         return dx
