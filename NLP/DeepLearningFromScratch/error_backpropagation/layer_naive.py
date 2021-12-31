@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.pardir)
 
-from common.functions import sigmoid, cross_entropy_error
+from common.functions import softmax, cross_entropy_error
 import numpy as np
 
 
@@ -101,9 +101,9 @@ class SoftmaxWithLoss:
         self.loss = None
 
     def forward(self, x, t):
-        self.y = sigmoid(x)
+        self.y = softmax(x)
         self.t = t
-        self.loss = cross_entropy_error(y, t)
+        self.loss = cross_entropy_error(self.y, self.t)
 
         return self.loss
 

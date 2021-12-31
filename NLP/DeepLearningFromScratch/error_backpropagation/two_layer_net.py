@@ -14,9 +14,9 @@ class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         self.params = dict()
         self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size)
-        self.params['b1'] = weight_init_std * np.zeros(hidden_size)
+        self.params['b1'] = np.zeros(hidden_size)
         self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
-        self.params['b2'] = weight_init_std * np.zeros(output_size)
+        self.params['b2'] = np.zeros(output_size)
 
         self.layers = OrderedDict()
         self.layers['Affine1'] = Affine(self.params['W1'], self.params['b1'])
@@ -77,6 +77,3 @@ class TwoLayerNet:
         grads['b2'] = self.layers['Affine2'].db
         return grads
 
-
-# def test_two_layer_net():
-#     (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, flatten=True, one_hot_label=False)
