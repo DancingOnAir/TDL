@@ -43,6 +43,23 @@ class AdaGrad:
                 params -= self.lr * grads[k] / (np.sqrt(self.h[k]) + 1e-7)
 
 
+class RMSprop:
+    def __init__(self, lr=0.01, decay_rate=0.99):
+        self.lr = lr
+        self.decay_rate = decay_rate
+        self.h = None
+
+    def update(self, params, grads):
+        if self.h is None:
+            self.h = dict()
+            for k, val in params.item():
+                self.h[k] = np.zeros_like(val)
+
+        for k in params.keys():
+            self.h[k] *= self.decay_rate
+            self.h[k] += (1 - self.decay_rate) * grads[k] * grads[k]
+            params[k] -= self.lr * grads[k] / (np.sqrt(self.h[k]) + 1e-7)
+
 # https://www.zhihu.com/question/323747423/answer/790457991
 # https://blog.csdn.net/zk_ken/article/details/82416061 这里有公式推导
 class Adam:
