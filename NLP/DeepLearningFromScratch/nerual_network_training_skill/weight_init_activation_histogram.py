@@ -6,6 +6,10 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+def relu(x):
+    return np.maximum(0, x)
+
+
 x = np.random.randn(1000, 100)
 node_num = 100
 hidden_layer_size = 5
@@ -17,10 +21,16 @@ for i in range(hidden_layer_size):
         x = activations[i - 1]
 
     # w = np.random.randn(node_num, node_num) * 1
-    w = np.random.randn(node_num, node_num) * 0.01
+    # std = 0.01
+    # w = np.random.randn(node_num, node_num) * 0.01
+    # Xavier
+    # w = np.random.randn(node_num, node_num) / np.sqrt(node_num)
+    # He
+    w = np.random.randn(node_num, node_num) * np.sqrt(2) / np.sqrt(node_num)
 
     z = np.dot(x, w)
-    a = sigmoid(z)
+    # a = sigmoid(z)
+    a = relu(z)
     activations[i] = a
 
 
