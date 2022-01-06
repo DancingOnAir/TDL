@@ -20,7 +20,8 @@ class MulLayerNet:
 
         self.__init_weight(weight_init_std)
 
-        self.last_layer = Soft
+        self.last_layer = SoftmaxWithLoss()
+
 
     # xavier and he
     def __init_weight(self, weight_init_std):
