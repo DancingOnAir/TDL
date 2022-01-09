@@ -40,7 +40,7 @@ class MulLayerNet:
         pass
 
     def loss(self, x, t, train_flag=False):
-
+        pass
 
     def accuracy(self, X, T):
         pass
