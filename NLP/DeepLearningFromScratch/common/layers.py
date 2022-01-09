@@ -74,6 +74,33 @@ class Relu:
         return dx
 
 
+class Affine:
+    def __init__(self, W, b):
+        self.W = W
+        self.b = b
+
+        self.original_x_shape = None
+        self.x = None
+        self.dW = None
+        self.db = None
+
+    def forward(self, x):
+        self.original_x_shape = x.shape
+        # 针对x.ndim==1的情况
+        self.x = x.reshape(x.shape[0], -1)
+
+        out = np.dot(self.x, self.W) + self.b
+        return out
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
+        self.db = np.sum(dout, axis=0)
+
+        dx = dx.reshape(*self.original_x_shape)
+        return dx
+
+
 class SoftmaxWithLoss:
     def __init__(self):
         self.y = None
@@ -96,23 +123,20 @@ class SoftmaxWithLoss:
         return dx
 
 
-class Affine:
-    def __init__(self, W, b):
-        self.W = W
-        self.b = b
+class Dropout:
+    def __init__(self, dropout_ratio=0.5):
+        self.dropout_ratio = dropout_ratio
+        self.mask = None
 
-        self.x = None
-        self.dW = None
-        self.db = None
-
-    def forward(self, x):
-        self.x = x
-        out = np.dot(self.x, self.W) + self.b
-        return out
+    def forward(self, x, train_flag=True):
+        if train_flag:
+            self.mask = np.random.rand(*x.shape) > self.dropout_ratio
+            return x * self.mask
+        else:
+            # https://blog.csdn.net/m0_47256162/article/details/121512403?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~aggregatepage~first_rank_ecpm_v1~rank_v31_ecpm-3-121512403.pc_agg_new_rank&utm_term=Dropout%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E4%BC%98%E7%82%B9&spm=1000.2123.3001.4430
+            return x * (1.0 - self.dropout_ratio)
 
     def backward(self, dout):
-        dx = np.dot(dout, self.W.T)
-        self.dW = np.dot(self.x.T, dout)
-        self.db = np.sum(dout, axis=0)
+        return dout * self.mask
 
-        return dx
+
