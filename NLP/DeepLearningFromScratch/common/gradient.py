@@ -4,7 +4,7 @@ import numpy as np
 def numerical_gradient(f, x):
     h = 1e-4
     grad = np.zeros_like(x)
-
+    # multi_index causes a multi-index, or a tuple of indices with one per iteration dimension, to be tracked.
     it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
     while not it.finished:
         i = it.multi_index

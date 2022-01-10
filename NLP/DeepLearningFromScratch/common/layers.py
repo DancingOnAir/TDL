@@ -140,3 +140,42 @@ class Dropout:
         return dout * self.mask
 
 
+class BatchNormalization:
+    def __init__(self, ):
+        self.batch_size = None
+
+        pass
+
+    def forward(self):
+        pass
+
+    def backward(self):
+        pass
+
+
+class Convolution:
+    def __init__(self, W, b, stride=1, padding=0):
+        self.W = W
+        self.b = b
+        self.stride = stride
+        self.padding = padding
+
+        self.original_x_shape = None
+        self.dW = None
+        self.db = None
+        pass
+
+    def forward(self, x):
+        FN, C, FH, FW = self.W.shape
+        N, C, H, W = x.shape
+
+        self.original_x_shape = x.shape
+        x.reshape(self.original_x_shape[0], -1)
+
+        out_H = 1 + int(x.shape[0] + 2 * self.padding)
+
+        pass
+
+    def backward(self):
+        pass
+
