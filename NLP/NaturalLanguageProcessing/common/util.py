@@ -15,7 +15,7 @@ def preprocess(text):
             id_to_word[new_id] = word
             word_to_id[word] = new_id
 
-    corpus = np.array(word_to_id[word] for word in words)
+    corpus = np.array([word_to_id[word] for word in words])
     return corpus, word_to_id, id_to_word
 
 
@@ -46,11 +46,12 @@ def cos_similarity(x, y, eps=1e-8):
     return np.dot(nx, ny)
 
 
-def most_similarity(query, word_to_id, id_to_word, word_matrix, top=5):
+def most_similar(query, word_to_id, id_to_word, word_matrix, top=5):
     if query not in word_to_id:
         print('%s is not found' % query)
         return
 
+    print('[query] %s' % query)
     query_id = word_to_id[query]
     query_vec = word_matrix[query_id]
 
