@@ -1,7 +1,8 @@
 import sys
 import os
-sys.path.append(os.pardir)
 
+print(os.pardir)
+sys.path.append(os.pardir)
 
 import numpy as np
 from common.util import preprocess, create_co_matrix, cos_similarity, ppmi
