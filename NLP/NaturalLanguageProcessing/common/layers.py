@@ -21,3 +21,4 @@ class MatMul:
         self.grads[0][...] = dW
 
         return dx
+
