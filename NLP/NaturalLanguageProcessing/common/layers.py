@@ -2,22 +2,23 @@ import numpy as np
 
 
 class MatMul:
-    def __init__(self, W, b=0):
-        self.W = W
-        self.b = b
-
+    def __init__(self, W):
+        self.params = [W]
+        self.grads = [np.zeros_like(W)]
         self.x = None
-        self.dx = None
-        self.dW = None
 
     def forward(self, x):
         self.x = x
-        out = np.dot(x, self.W) + self.b
+        W, = self.params
+        out = np.dot(x, W)
 
         return out
 
     def backward(self, dout):
-        self.dW = dout * self.x
-        self.dx = dout * self.W
+        W, = self.params
+        dx = np.dot(dout, W.T)
+        dW = np.dot(self.x.T, dout)
+        self.grads[0][...] = dW
 
-        return self.dW, self.dx
+        return dx
+
