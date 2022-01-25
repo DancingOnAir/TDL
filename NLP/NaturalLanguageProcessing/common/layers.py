@@ -1,4 +1,10 @@
+import sys
+import os
+sys.path.append(os.pardir)
+
+
 import numpy as np
+from common.functions import softmax, cross_entropy_error
 
 
 class MatMul:
@@ -22,3 +28,24 @@ class MatMul:
 
         return dx
 
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.y = None
+        self.t = None
+        self.loss = None
+
+    def forward(self, x, t):
+        y = softmax(x)
+        self.y = y
+        self.t = t
+
+        self.loss = cross_entropy_error(y, t)
+
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
+
+        return dx
