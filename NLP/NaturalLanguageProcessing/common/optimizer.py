@@ -25,3 +25,19 @@ class Momentum:
         for k in params.keys():
             self.v[k] = self.momentum * self.v[k] - self.lr * grads[k]
             params[k] += self.v[k]
+
+
+class AdaGrad:
+    def __init__(self, lr=0.01):
+        self.lr = lr
+        self.h = None
+
+    def update(self, params, grads):
+        if self.h is None:
+            self.h = dict()
+            for k, val in params.items():
+                self.h[k] = np.zeros_like(val)
+
+        for k in params.keys():
+            self.h[k] += grads[k] * grads[k]
+            params[k] -= self.lr * grads[k] / (np.sqrt(self.h[k]) + 1e-7)
