@@ -72,7 +72,7 @@ class Adam:
         self.iter = 0
 
     def update(self, params, grads):
-        if self.momentum is None:
+        if self.m is None:
             for k, val in params.item():
                 self.v = dict()
                 self.v[k] = np.zeros_like(val)
