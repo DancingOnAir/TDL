@@ -41,3 +41,21 @@ class AdaGrad:
         for k in params.keys():
             self.h[k] += grads[k] * grads[k]
             params[k] -= self.lr * grads[k] / (np.sqrt(self.h[k]) + 1e-7)
+
+
+class RMSprop:
+    def __init__(self, lr=0.01, decay_rate=0.99):
+        self.lr = lr
+        self.decay_rate = decay_rate
+        self.h = None
+
+    def update(self, parmas, grads):
+        if self.h is None:
+            self.h = dict()
+            for k, val in parmas.items():
+                self.h[k] = np.zeros_like(val)
+
+        for k in parmas.keys():
+            self.h[k] *= self.decay_rate
+            self.h[k] += (1 - self.decay_rate) * grads[k] * grads[k]
+            parmas[k] -= self.lr * grads[k] / (np.sqrt(self.h[k]) + 1e-7)
