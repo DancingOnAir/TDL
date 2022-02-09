@@ -73,17 +73,17 @@ class Adam:
 
     def update(self, params, grads):
         if self.m is None:
-            self.m = dict()
-            self.v = dict()
+            self.m = list()
+            self.v = list()
 
-            for k, val in params.items():
-                self.m[k] = np.zeros_like(val)
-                self.v[k] = np.zeros_like(val)
+            for param in params:
+                self.m.append(np.zeros_like(param))
+                self.v.append(np.zeros_like(param))
 
         self.iter += 1
         lr_iter = self.lr * np.sqrt(1 - self.beta2 ** self.iter) / (1 - self.beta1 ** self.iter)
 
-        for k in params.keys():
-            self.m[k] += (1 - self.beta1) * (grads[k] - self.m[k])
-            self.v[k] += (1 - self.beta2) * (grads[k] ** 2 - self.v[k])
-            params[k] -= lr_iter * self.m[k] / (np.sqrt(self.v[k]) + 1e-7)
+        for i in range(len(params)):
+            self.m[i] += (1 - self.beta1) * (grads[i] - self.m[i])
+            self.v[i] += (1 - self.beta2) * (grads[i] ** 2 - self.v[i])
+            params[i] -= lr_iter * self.m[i] / (np.sqrt(self.v[i]) + 1e-7)
